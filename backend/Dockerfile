@@ -22,6 +22,7 @@ WORKDIR /app
 
 # Copy package files and install only production dependencies
 COPY package*.json ./
+RUN apt-get update && apt-get install -y libcurl4 && rm -rf /var/lib/apt/lists/*
 RUN npm install --omit=dev
 
 # Copy compiled code from builder
