@@ -14,12 +14,12 @@ Write-Host "Deploying LearnMind AI to Project: $ProjectId in Region: $Region" -F
 # 1. Build and Deploy Backend
 Write-Host "--- Deploying Backend ---" -ForegroundColor Green
 Set-Location backend
-gcloud builds submit --tag "gcr.io/$ProjectId/$BackendService"
 gcloud run deploy $BackendService `
-    --image "gcr.io/$ProjectId/$BackendService" `
+    --source . `
     --platform managed `
     --region $Region `
-    --allow-unauthenticated
+    --allow-unauthenticated `
+    --quiet
 
 # Get Backend URL
 $BackendUrl = gcloud run services describe $BackendService --platform managed --region $Region --format 'value(status.url)'
@@ -30,6 +30,7 @@ Write-Host "--- Deploying Frontend ---" -ForegroundColor Green
 Set-Location ..\frontend
 
 # Read Clerk Key from .env if possible
+$ViteClerkKey = ""
 if (Test-Path .env) {
     $envContent = Get-Content .env
     foreach ($line in $envContent) {
@@ -39,15 +40,18 @@ if (Test-Path .env) {
     }
 }
 
-gcloud builds submit --tag "gcr.io/$ProjectId/$FrontendService" `
-    --build-arg "VITE_API_URL=$BackendUrl" `
-    --build-arg "VITE_CLERK_PUBLISHABLE_KEY=$ViteClerkKey"
+if (-not $ViteClerkKey) {
+    Write-Warning "VITE_CLERK_PUBLISHABLE_KEY not found in .env. Deployment might fail or lack authentication."
+}
 
+# Use --set-build-env-vars to pass variables to the build process (Vite)
 gcloud run deploy $FrontendService `
-    --image "gcr.io/$ProjectId/$FrontendService" `
+    --source . `
     --platform managed `
     --region $Region `
-    --allow-unauthenticated
+    --allow-unauthenticated `
+    --set-build-env-vars "VITE_API_URL=$BackendUrl,VITE_CLERK_PUBLISHABLE_KEY=$ViteClerkKey" `
+    --quiet
 
 $FrontendUrl = gcloud run services describe $FrontendService --platform managed --region $Region --format 'value(status.url)'
 
