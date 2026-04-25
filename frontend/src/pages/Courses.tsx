@@ -10,6 +10,7 @@ const Courses: React.FC = () => {
   const navigate = useNavigate();
   const [externalCourses, setExternalCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [, setSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   

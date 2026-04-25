@@ -22,8 +22,8 @@ const CoursePlayer: React.FC = () => {
   // State
   const [videoData, setVideoData] = useState<any>(location.state?.video);
   const [playing, setPlaying] = useState(false); // Default to false to avoid autoplay block
-  // const [played, setPlayed] = useState(0);
-  // const [duration, setDuration] = useState(0);
+  const [, setPlayed] = useState(0);
+  const [, setDuration] = useState(0);
   const [isReady, setIsReady] = useState(false);
   
   // AI Tools State

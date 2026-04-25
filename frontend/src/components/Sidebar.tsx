@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, BookOpen, BarChart3, Target, Settings, LogOut, Brain, Zap, GraduationCap } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useClerk } from '@clerk/clerk-react';
