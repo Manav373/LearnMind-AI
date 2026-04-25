@@ -51,7 +51,7 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { getToken, isLoaded: isClerkLoaded, isSignedIn } = useClerkAuth();
-  const { user: clerkUser, isLoaded: isUserLoaded } = useClerkUser();
+  const { isLoaded: isUserLoaded } = useClerkUser();
   const [appUser, setAppUser] = useState<AppUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

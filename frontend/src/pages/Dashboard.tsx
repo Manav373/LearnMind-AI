@@ -6,7 +6,7 @@ import { getOverview, getRecommendations, getMyCourses } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
-  const { user, refreshUser } = useAuth();
+  const { user } = useAuth();
   const [overview, setOverview] = useState<any>(null);
   const [recommendations, setRecommendations] = useState<any[]>([]);
   const [myCourses, setMyCourses] = useState<any[]>([]);
@@ -115,7 +115,7 @@ const Dashboard: React.FC = () => {
 
               <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                 <button 
-                  onClick={() => navigate(`/player/${user.lastWatchedVideo.videoId}`, { state: { video: user.lastWatchedVideo } })}
+                  onClick={() => user?.lastWatchedVideo && navigate(`/player/${user.lastWatchedVideo.videoId}`, { state: { video: user.lastWatchedVideo } })}
                   className="gradient-primary text-white px-8 py-3.5 rounded-2xl font-bold text-sm shadow-xl shadow-violet-500/30 hover:opacity-90 transition-all flex items-center justify-center gap-2"
                 >
                   <Play className="w-4 h-4 fill-white" /> Resume Now

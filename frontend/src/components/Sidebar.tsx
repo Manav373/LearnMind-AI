@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, BarChart3, Target, MessageSquare, Settings, LogOut, Brain, Zap, GraduationCap } from 'lucide-react';
+import { LayoutDashboard, BookOpen, BarChart3, Target, Settings, LogOut, Brain, Zap, GraduationCap } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useClerk } from '@clerk/clerk-react';
 
@@ -15,7 +15,6 @@ const navItems = [
 const Sidebar: React.FC = () => {
   const { user } = useAuth();
   const { signOut } = useClerk();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     signOut({ redirectUrl: '/login' });

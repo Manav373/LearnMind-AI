@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Search, ChevronRight, Clock, BarChart, CheckCircle, Sparkles, Send, Bot, User } from 'lucide-react';
+import { Search, BarChart, Sparkles, Send, Bot, User } from 'lucide-react';
 import { askCourseAI, searchExternal } from '../services/api';
 
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,6 @@ const Courses: React.FC = () => {
   const navigate = useNavigate();
   const [externalCourses, setExternalCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searching, setSearching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   

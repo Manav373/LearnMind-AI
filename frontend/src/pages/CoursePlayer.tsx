@@ -4,8 +4,8 @@ import ReactPlayer from 'react-player';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronLeft, Sparkles, BookOpen, HelpCircle, 
-  Download, Share2, Play, Pause, Volume2, 
-  Settings, Maximize, Bot, Send, User, CheckCircle
+  Download, Share2, Play, 
+  Settings, Bot, Send, User
 } from 'lucide-react';
 import { 
   updateVideoProgress, generateVideoNotes, 
@@ -22,8 +22,8 @@ const CoursePlayer: React.FC = () => {
   // State
   const [videoData, setVideoData] = useState<any>(location.state?.video);
   const [playing, setPlaying] = useState(false); // Default to false to avoid autoplay block
-  const [played, setPlayed] = useState(0);
-  const [duration, setDuration] = useState(0);
+  // const [played, setPlayed] = useState(0);
+  // const [duration, setDuration] = useState(0);
   const [isReady, setIsReady] = useState(false);
   
   // AI Tools State

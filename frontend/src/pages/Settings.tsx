@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Settings as SettingsIcon, Brain, User as UserIcon, Palette, Save } from 'lucide-react';
+import { Brain, User as UserIcon, Palette, Save } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { updateSettings } from '../services/api';
 import { useUser } from '@clerk/clerk-react';
@@ -8,8 +8,8 @@ import { useUser } from '@clerk/clerk-react';
 const Settings: React.FC = () => {
   const { user: appUser, refreshUser } = useAuth();
   const { user: clerkUser } = useUser();
-  const [learningStyle, setLearningStyle] = useState(appUser?.learningStyle || 'visual');
-  const [mentorPersonality, setMentorPersonality] = useState(appUser?.mentorPersonality || 'friendly');
+  const [learningStyle, setLearningStyle] = useState<'visual' | 'textual' | 'example'>(appUser?.learningStyle || 'visual');
+  const [mentorPersonality, setMentorPersonality] = useState<'friendly' | 'strict' | 'coach'>(appUser?.mentorPersonality || 'friendly');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -72,7 +72,7 @@ const Settings: React.FC = () => {
           {styles.map(s => (
             <button
               key={s.value}
-              onClick={() => setLearningStyle(s.value)}
+              onClick={() => setLearningStyle(s.value as any)}
               className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all ${
                 learningStyle === s.value ? 'bg-violet-500/10 border-violet-500/30' : 'bg-white/[0.02] border-white/5 hover:border-white/10'
               }`}
@@ -98,7 +98,7 @@ const Settings: React.FC = () => {
           {personalities.map(p => (
             <button
               key={p.value}
-              onClick={() => setMentorPersonality(p.value)}
+              onClick={() => setMentorPersonality(p.value as any)}
               className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all ${
                 mentorPersonality === p.value ? 'bg-blue-500/10 border-blue-500/30' : 'bg-white/[0.02] border-white/5 hover:border-white/10'
               }`}
