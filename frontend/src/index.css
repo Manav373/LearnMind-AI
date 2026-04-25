@@ -1,0 +1,95 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Custom design tokens */
+@theme {
+  --color-dark-900: #0a0e1a;
+  --color-dark-800: #0f172a;
+  --color-dark-700: #1e293b;
+  --color-dark-600: #334155;
+  --color-dark-500: #475569;
+  --color-violet-primary: #8b5cf6;
+  --color-violet-light: #a78bfa;
+  --color-blue-primary: #3b82f6;
+  --color-blue-light: #60a5fa;
+  --color-emerald-primary: #10b981;
+  --color-amber-primary: #f59e0b;
+  --color-rose-primary: #f43f5e;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Base layer */
+body {
+  font-family: var(--font-sans);
+  background: var(--color-dark-900);
+  color: #f1f5f9;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Gradient utilities */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-violet-primary), var(--color-blue-primary));
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-violet-light), var(--color-blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  border-image: linear-gradient(135deg, var(--color-violet-primary), var(--color-blue-primary)) 1;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Pulse animation for status indicators */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.pulse-dot::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  animation: pulse-ring 1.5s ease-out infinite;
+  background: inherit;
+}
+
+/* Mastery bar colors */
+.mastery-bar {
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
