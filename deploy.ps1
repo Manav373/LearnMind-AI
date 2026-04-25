@@ -14,11 +14,28 @@ Write-Host "Deploying LearnMind AI to Project: $ProjectId in Region: $Region" -F
 # 1. Build and Deploy Backend
 Write-Host "--- Deploying Backend ---" -ForegroundColor Green
 Set-Location backend
+# Read Backend Env Vars
+$BackendEnvVars = ""
+if (Test-Path .env) {
+    $envContent = Get-Content .env
+    foreach ($line in $envContent) {
+        if ($line -match "^([^#=]+)=(.*)") {
+            $key = $Matches[1].Trim()
+            $value = $Matches[2].Trim()
+            if ($key -ne "PORT" -and $key -ne "MONGODB_URI") {
+                $BackendEnvVars += "$key=$value,"
+            }
+        }
+    }
+}
+$BackendEnvVars = $BackendEnvVars.TrimEnd(',')
+
 gcloud run deploy $BackendService `
     --source . `
     --platform managed `
     --region $Region `
     --allow-unauthenticated `
+    --set-env-vars $BackendEnvVars `
     --quiet
 
 # Get Backend URL
