@@ -1,10 +1,13 @@
 # Build stage
-FROM node:20-slim AS builder
+FROM node:22-slim AS builder
 
 WORKDIR /app
 
+ENV CI=true
+ENV NODE_OPTIONS="--max-old-space-size=2048"
+
 COPY package*.json ./
-RUN npm install
+RUN npm install --no-audit --no-fund --legacy-peer-deps
 
 COPY . .
 
