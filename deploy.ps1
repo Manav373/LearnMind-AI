@@ -61,13 +61,19 @@ if (-not $ViteClerkKey) {
     Write-Warning "VITE_CLERK_PUBLISHABLE_KEY not found in .env. Deployment might fail or lack authentication."
 }
 
-# Use --set-build-env-vars to pass variables to the build process (Vite)
+# Set environment variables for the local build
+$env:VITE_API_URL = $BackendUrl
+$env:VITE_CLERK_PUBLISHABLE_KEY = $ViteClerkKey
+
+Write-Host "Building frontend locally..." -ForegroundColor Cyan
+npm run build
+
+# Deploy the pre-built files using the nginx Dockerfile
 gcloud run deploy $FrontendService `
     --source . `
     --platform managed `
     --region $Region `
     --allow-unauthenticated `
-    --set-build-env-vars "VITE_API_URL=$BackendUrl,VITE_CLERK_PUBLISHABLE_KEY=$ViteClerkKey" `
     --quiet
 
 $FrontendUrl = gcloud run services describe $FrontendService --platform managed --region $Region --format 'value(status.url)'
